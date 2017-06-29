@@ -45,6 +45,15 @@ public class Examine {
         return questionCount;
     }
 
+    @Override
+    public String toString() {
+        return "Examine{" +
+                "subjectTitle='" + subjectTitle + '\'' +
+                ", limitTime=" + limitTime +
+                ", questionCount=" + questionCount +
+                '}';
+    }
+
     public void setQuestionCount(int questionCount) {
         this.questionCount = questionCount;
     }
