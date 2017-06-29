@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JKBDbyEmpress.iml" filepath="$PROJECT_DIR$/JKBDbyEmpress.iml" />
       <module fileurl="file://$PROJECT_DIR$/JKBDgit.iml" filepath="$PROJECT_DIR$/JKBDgit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/JKBDgit.iml" filepath="$PROJECT_DIR$/JKBDgit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
