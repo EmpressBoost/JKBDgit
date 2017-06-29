@@ -16,6 +16,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/main_menu_exam"
             android:text="随机测试"
+            android:onClick="randonExame"
             android:background="@null"
             android:gravity="center"/>
         <Button
@@ -24,6 +25,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/main_menu_result"
             android:text="全部测试"
+            android:onClick="allExame"
             android:background="@null"
             android:gravity="center"/>
     </LinearLayout>
@@ -40,6 +42,7 @@
             android:drawableTop="@mipmap/main_menu_message"
             android:text="设置"
             android:background="@null"
+            android:onClick="setting"
             android:gravity="center"/>
         <Button
             android:layout_width="match_parent"
@@ -47,6 +50,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/main_menu_exit"
             android:text="退出"
+            android:onClick="exit"
             android:background="@null"
             android:gravity="center"/>
     </LinearLayout>
