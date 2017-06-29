@@ -48,9 +48,9 @@ public class Examine {
     @Override
     public String toString() {
         return "Examine{" +
-                "subjectTitle='" + subjectTitle + '\'' +
-                ", limitTime=" + limitTime +
-                ", questionCount=" + questionCount +
+                "考试科目：'" + subjectTitle +'\''+
+                "\n考题数量：" + questionCount +
+                "\n考试时间" + limitTime +
                 '}';
     }
 
