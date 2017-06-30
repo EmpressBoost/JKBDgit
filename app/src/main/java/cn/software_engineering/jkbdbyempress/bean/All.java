@@ -1,12 +1,13 @@
 package cn.software_engineering.jkbdbyempress.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Asus on 2017/6/29.
  */
 
-public class All {
+public class All implements Serializable{
     /**
      * error_code : 0
      * reason : ok
@@ -33,8 +34,16 @@ public class All {
         this.reason = reason;
     }
 
-    public List<?> getResult() {
+    public List<Quetion> getResult() {
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "All{" +
+                "reason='" + reason + '\'' +
+                ", result=" + result +
+                '}';
     }
 
     public void setResult(List<Quetion> result) {

@@ -1,10 +1,12 @@
 package cn.software_engineering.jkbdbyempress.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Asus on 2017/6/29.
  */
 
-public class Quetion {
+public class Quetion implements Serializable {
     /**
      * id : 2
      * question : 这个标志是何含义？
@@ -97,5 +99,17 @@ public class Quetion {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "Quetion{" +
+                "question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", item1='" + item1 + '\'' +
+                ", item2='" + item2 + '\'' +
+                ", item3='" + item3 + '\'' +
+                ", item4='" + item4 + '\'' +
+                '}';
     }
 }
