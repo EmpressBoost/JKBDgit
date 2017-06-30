@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.io.Serializable;
+
 import cn.software_engineering.jkbdbyempress.R;
 import cn.software_engineering.jkbdbyempress.bean.Examine;
 import cn.software_engineering.jkbdbyempress.utils.OkHttpUtils;
@@ -24,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
         okHttpUtils.url(murl).targetClass(Examine.class).execute(new OkHttpUtils.OnCompleteListener<Examine>() {
             @Override
             public void onSuccess(Examine result) {
-                Log.e("main","result:"+result.toString());
+               Log.e("main","result:"+result.toString());
+                Intent intent=new Intent(MainActivity.this,RandonActivity.class);
+                intent.putExtra("key",result);
+                startActivity(intent);
             }
 
             @Override
@@ -33,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        startActivity(new Intent(MainActivity.this,RandonActivity.class));
+        
     }
 
     public void allExame(View view) {

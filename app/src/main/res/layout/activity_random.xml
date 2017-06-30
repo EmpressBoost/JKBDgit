@@ -17,6 +17,7 @@
             android:layout_marginTop="10dp"
             android:src="@mipmap/exam_title"/>
         <TextView
+            android:id="@+id/examineindo"
             android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
