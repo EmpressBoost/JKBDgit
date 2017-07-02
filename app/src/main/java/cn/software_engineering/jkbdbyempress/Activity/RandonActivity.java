@@ -83,6 +83,20 @@ public class RandonActivity extends AppCompatActivity {
         {
             showData(mexamine);
         }
+        List<Quetion> quetion=ExamApplication.getInstance().getMquetions();
+        if(quetion!=null){
+            showQuetion(quetion);
+        }
+    }
+
+    private void showQuetion(List<Quetion> quetion) {
+        Quetion mquetion=quetion.get(0);
+        title.setText(mquetion.getQuestion());
+        intem1.setText(mquetion.getItem1());
+        intem2.setText(mquetion.getItem2());
+        intem3.setText(mquetion.getItem3());
+        intem4.setText(mquetion.getItem4());
+
     }
 
     private void showData(Examine mexamine) {
