@@ -11,6 +11,8 @@ import cn.software_engineering.jkbdbyempress.Activity.RandonActivity;
 import cn.software_engineering.jkbdbyempress.bean.All;
 import cn.software_engineering.jkbdbyempress.bean.Examine;
 import cn.software_engineering.jkbdbyempress.bean.Quetion;
+import cn.software_engineering.jkbdbyempress.biz.ExamBiz;
+import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
 import cn.software_engineering.jkbdbyempress.utils.OkHttpUtils;
 import cn.software_engineering.jkbdbyempress.utils.ResultUtils;
 
@@ -22,11 +24,13 @@ public class ExamApplication extends Application{
     Examine mexamine;
     List<Quetion> mquetions;
     private static ExamApplication instance;
+    IExamBiz biz;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance=this;
+        biz=new ExamBiz();
         initData();
     }
     public static  ExamApplication getInstance(){
@@ -50,10 +54,11 @@ public class ExamApplication extends Application{
     }
 
     private void initData() {
-        new Thread(new Runnable() {
+       new Thread(new Runnable() {
             @Override
             public void run() {
-                OkHttpUtils<Examine> okHttpUtils=new OkHttpUtils<Examine>(instance);
+                biz.biginExam();
+               /*  OkHttpUtils<Examine> okHttpUtils=new OkHttpUtils<Examine>(instance);
                 String murl="http://101.251.196.90:8080/JztkServer/examInfo";
                 okHttpUtils.url(murl).targetClass(Examine.class).execute(new OkHttpUtils.OnCompleteListener<Examine>() {
                     @Override
@@ -88,7 +93,7 @@ public class ExamApplication extends Application{
                         Log.e("main","error：0000"+error);
 
                     }
-                });
+                });*/
             }
         }).start();
 
