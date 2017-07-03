@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.6"
+        android:layout_weight="0.8"
         android:orientation="vertical">
         <ImageView
             android:layout_width="wrap_content"
@@ -18,11 +18,12 @@
             android:src="@mipmap/exam_title"/>
         <TextView
             android:id="@+id/examineindo"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:textSize="20dp"
+            android:textSize="18dp"
             tools:text="@string/examineinfo"/>
 
 
@@ -36,6 +37,7 @@
         android:background="#3399CC"
         android:layout_gravity="center"
         />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -166,48 +168,87 @@
                 tools:text="直行和左转合用车道" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:text="A"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                />
+            <CheckBox
+                android:text="B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"
+                />
+            <CheckBox
+                android:text="C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"
+                />
+            <CheckBox
+                android:text="D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"
+                />
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_weight="0.7">
+        android:layout_weight="0.8"
+        android:gravity="center">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
             >
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@null"
                 android:drawableLeft="@mipmap/exam_pre32x32"
                 android:text="上一题"
-                android:textSize="18dp"
-                android:layout_alignParentLeft="true"
-                android:background="@null"/>
+                android:textSize="18dp" />
+
             <Button
                 android:id="@+id/btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@null"
                 android:drawableRight="@mipmap/exam_next32x32"
                 android:text="下一题"
-                android:textSize="18dp"
-                android:layout_alignParentRight="true"
-                android:background="@null"/>
+                android:textSize="18dp" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:drawableTop="@mipmap/exam_commit32x32"
                 android:text="交卷"
                 android:textSize="18dp"
-                android:layout_centerInParent="true"
-                android:layout_below="@id/btn_next"
-                android:background="@null"/>
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
     </LinearLayout>
