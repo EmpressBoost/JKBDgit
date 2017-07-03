@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class RandonActivity extends AppCompatActivity {
     TextView exminfo,title,intem1,intem2,intem3,intem4,tvload;
     ImageView quetion_img;
     LinearLayout layoutLoading;
+    ProgressBar loaddialog;
     boolean isLoadExamInfoReceiver=false;
     boolean isLoadExamQuetionReceiver=false;
     boolean isLoadExamInfo=false;
@@ -56,13 +58,21 @@ public class RandonActivity extends AppCompatActivity {
         intem3=(TextView)findViewById(R.id.tv_intem3);
         intem4=(TextView)findViewById(R.id.tv_intem4);
         tvload= (TextView) findViewById(R.id.tv_load);
+        loaddialog= (ProgressBar) findViewById(R.id.load_dialog);
         quetion_img= (ImageView) findViewById(R.id.image_1);
         layoutLoading= (LinearLayout) findViewById(R.id.layout_loading);
+        layoutLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadData();
+
+            }
+        });
         loadExamBroadcast=new LoadExamBroadcast();
         loadQuetionBroadcast=new LoadQuetionBroadcast();
         setListener();
+        biz=new ExamBiz();
         loadData();
-        initData();
     }
 
     private void setListener() {
@@ -82,7 +92,9 @@ public class RandonActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        biz=new ExamBiz();
+        layoutLoading.setEnabled(false);
+        loaddialog.setVisibility(View.VISIBLE);
+        tvload.setText("下载中……");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -105,6 +117,8 @@ public class RandonActivity extends AppCompatActivity {
                 }
             }
         }else {
+            layoutLoading.setEnabled(true);
+            loaddialog.setVisibility(View.GONE);
             tvload.setText("下载失败，点击重新下载");
         }
 
