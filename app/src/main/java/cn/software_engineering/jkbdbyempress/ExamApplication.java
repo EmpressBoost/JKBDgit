@@ -21,17 +21,17 @@ import cn.software_engineering.jkbdbyempress.utils.ResultUtils;
  */
 
 public class ExamApplication extends Application{
+    public static String LOAD_EXAM_INFO="load_exam_info";
+    public static String LOAD_EXAM_QUESTION="load_exam_question";
+    public static String LOAD_DATA_SUCCESS="load_data_success";
     Examine mexamine;
     List<Quetion> mquetions;
     private static ExamApplication instance;
-    IExamBiz biz;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance=this;
-        biz=new ExamBiz();
-        initData();
     }
     public static  ExamApplication getInstance(){
         return  instance;
@@ -53,49 +53,5 @@ public class ExamApplication extends Application{
         this.mquetions = mquetions;
     }
 
-    private void initData() {
-       new Thread(new Runnable() {
-            @Override
-            public void run() {
-                biz.biginExam();
-               /*  OkHttpUtils<Examine> okHttpUtils=new OkHttpUtils<Examine>(instance);
-                String murl="http://101.251.196.90:8080/JztkServer/examInfo";
-                okHttpUtils.url(murl).targetClass(Examine.class).execute(new OkHttpUtils.OnCompleteListener<Examine>() {
-                    @Override
-                    public void onSuccess(Examine result) {
-                        Log.e("main","result:"+result);
-                        mexamine=result;
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.e("main","error:"+error);
-                    }
-                });
 
-                OkHttpUtils<String> utils1=new OkHttpUtils<>(instance);
-                String url2="http://101.251.196.90:8080/JztkServer/getQuestions?testType=rand";
-                utils1.url(url2).targetClass(String.class).execute(new OkHttpUtils.OnCompleteListener<String>() {
-                    @Override
-                    public void onSuccess(String jsonStr) {
-                        All listResultFromJson = ResultUtils.getListResultFromJson(jsonStr);
-                        if(listResultFromJson!=null && listResultFromJson.getError_code()==0){
-                            List<Quetion> list=listResultFromJson.getResult();
-                            if(list!=null && list.size()>0){
-                                mquetions=list;
-                                Log.e("hei","chenggongle:"+mquetions);
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.e("main","error：0000"+error);
-
-                    }
-                });*/
-            }
-        }).start();
-
-    }
 }
