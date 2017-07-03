@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +31,11 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
  */
 
 public class RandonActivity extends AppCompatActivity {
-    TextView exminfo,title,intem1,intem2,intem3,intem4;
+    TextView exminfo,title,intem1,intem2,intem3,intem4,tvload;
     ImageView quetion_img;
+    LinearLayout layoutLoading;
+    boolean isLoadExamInfoReceiver=false;
+    boolean isLoadExamQuetionReceiver=false;
     boolean isLoadExamInfo=false;
     boolean isLoadExamQuetion=false;
     IExamBiz biz;
@@ -50,7 +55,9 @@ public class RandonActivity extends AppCompatActivity {
         intem2=(TextView)findViewById(R.id.tv_intem2);
         intem3=(TextView)findViewById(R.id.tv_intem3);
         intem4=(TextView)findViewById(R.id.tv_intem4);
+        tvload= (TextView) findViewById(R.id.tv_load);
         quetion_img= (ImageView) findViewById(R.id.image_1);
+        layoutLoading= (LinearLayout) findViewById(R.id.layout_loading);
         loadExamBroadcast=new LoadExamBroadcast();
         loadQuetionBroadcast=new LoadQuetionBroadcast();
         setListener();
@@ -85,15 +92,20 @@ public class RandonActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        if(isLoadExamInfo==true && isLoadExamQuetion==true){
-            Examine mexamine = ExamApplication.getInstance().getMexamine();
-            if(mexamine!=null){
-                showData(mexamine);
+        if(isLoadExamInfoReceiver && isLoadExamQuetionReceiver){
+            if(isLoadExamInfo==true && isLoadExamQuetion==true){
+                layoutLoading.setVisibility(View.GONE);
+                Examine mexamine = ExamApplication.getInstance().getMexamine();
+                if(mexamine!=null){
+                    showData(mexamine);
+                }
+                List<Quetion> quetion=ExamApplication.getInstance().getMquetions();
+                if(quetion!=null){
+                    showQuetion(quetion);
+                }
             }
-            List<Quetion> quetion=ExamApplication.getInstance().getMquetions();
-            if(quetion!=null){
-                showQuetion(quetion);
-            }
+        }else {
+            tvload.setText("下载失败，点击重新下载");
         }
 
     }
@@ -124,6 +136,7 @@ public class RandonActivity extends AppCompatActivity {
             {
                 isLoadExamInfo=true;
             }
+            isLoadExamInfoReceiver=true;
             initData();
         }
     }
@@ -137,6 +150,7 @@ public class RandonActivity extends AppCompatActivity {
             {
                 isLoadExamQuetion=true;
             }
+            isLoadExamQuetionReceiver=true;
             initData();
         }
     }
