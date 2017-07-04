@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -76,6 +77,10 @@ public class RandonActivity extends AppCompatActivity {
         cbs[1]=cb_02;
         cbs[2]=cb_03;
         cbs[3]=cb_04;
+        cb_01.setOnCheckedChangeListener(listener);
+        cb_02.setOnCheckedChangeListener(listener);
+        cb_03.setOnCheckedChangeListener(listener);
+        cb_04.setOnCheckedChangeListener(listener);
         layoutLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +94,35 @@ public class RandonActivity extends AppCompatActivity {
         biz=new ExamBiz();
         loadData();
     }
-
+    CompoundButton.OnCheckedChangeListener listener=new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+            if(isChecked){
+                int userAnswer=0;
+                switch (compoundButton.getId()){
+                    case R.id.cb_01:
+                        userAnswer=1;
+                        break;
+                    case R.id.cb_02:
+                        userAnswer=2;
+                        break;
+                    case R.id.cb_03:
+                        userAnswer=3;
+                        break;
+                    case R.id.cb_04:
+                        userAnswer=4;
+                        break;
+                }
+                Log.e("CheckedChanged","user"+userAnswer+",isChecked"+isChecked);
+                if(userAnswer>0){
+                    for (CheckBox cb:cbs){
+                        cb.setChecked(false);
+                    }
+                    cbs[userAnswer-1].setChecked(true);
+                }
+            }
+        }
+    };
     private void setListener() {
         registerReceiver(loadExamBroadcast,new IntentFilter(ExamApplication.LOAD_EXAM_INFO));
         registerReceiver(loadQuetionBroadcast,new IntentFilter(ExamApplication.LOAD_EXAM_QUESTION));

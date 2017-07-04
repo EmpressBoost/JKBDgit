@@ -28,6 +28,15 @@ public class Quetion implements Serializable {
     private String item4;
     private String explains;
     private String url;
+    private String userAnswer;
+
+    public String getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
+    }
 
     public int getId() {
         return id;
