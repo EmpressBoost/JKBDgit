@@ -50,7 +50,7 @@ public class ExamBiz implements IExamBiz{
     @Override
     public Quetion preQuetion() {
         if(examlist!=null && quetionIndex>0){
-            quetionIndex++;
+            quetionIndex--;
             return examlist.get(quetionIndex);
         }else{
             return null;

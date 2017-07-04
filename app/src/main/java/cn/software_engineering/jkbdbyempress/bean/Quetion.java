@@ -122,6 +122,7 @@ public class Quetion implements Serializable {
                 ", item4='" + item4 + '\'' +
                 ", explains='" + explains + '\'' +
                 ", url='" + url + '\'' +
+                ", userAnswer='" + userAnswer + '\'' +
                 '}';
     }
 }

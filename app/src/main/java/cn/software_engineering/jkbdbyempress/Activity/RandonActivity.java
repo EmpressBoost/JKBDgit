@@ -159,7 +159,6 @@ public class RandonActivity extends AppCompatActivity {
                 if(mexamine!=null){
                     showData(mexamine);
                 }
-
                 showQuetion(biz.getNowQuetion());
             }
         }else {
@@ -190,18 +189,37 @@ public class RandonActivity extends AppCompatActivity {
             }else {
                 quetion_img.setVisibility(View.GONE);
             }
+            resetOption();
         }
     }
 
+    private void resetOption() {
+        for (CheckBox cb : cbs) {
+            cb.setChecked(false);
+        }
+    }
+    private void saveUserAnswer(){
+        for (int i = 0; i < cbs.length; i++) {
+            if(cbs[i].isChecked()){
+               // Log.e("chakan","1cbs:"+biz.getNowQuetion());
+               // Log.e("chakan","cbs:"+i);
+                biz.getNowQuetion().setUserAnswer(String.valueOf(i+1));
+              //  Log.e("chakan","2cbs:"+biz.getNowQuetion());
+                return;
+            }
+        }
+    }
     private void showData(Examine mexamine) {
         exminfo.setText(mexamine.toString());
     }
 
     public void preQuetion(View view) {
+        saveUserAnswer();
         showQuetion(biz.preQuetion());
     }
 
     public void nextQuetion(View view) {
+        saveUserAnswer();
         showQuetion(biz.nextQuetion());
     }
 
