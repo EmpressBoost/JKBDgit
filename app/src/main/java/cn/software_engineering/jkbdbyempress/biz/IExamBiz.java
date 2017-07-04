@@ -11,6 +11,6 @@ public interface IExamBiz {
     Quetion getNowQuetion();
     Quetion nextQuetion();
     Quetion preQuetion();
-    void commitExam();
+    int commitExam();
     String getQuetionIndex();
 }
