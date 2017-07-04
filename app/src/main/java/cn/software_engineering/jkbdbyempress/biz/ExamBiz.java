@@ -1,5 +1,9 @@
 package cn.software_engineering.jkbdbyempress.biz;
 
+import java.util.List;
+
+import cn.software_engineering.jkbdbyempress.ExamApplication;
+import cn.software_engineering.jkbdbyempress.bean.Quetion;
 import cn.software_engineering.jkbdbyempress.dao.ExamDao;
 import cn.software_engineering.jkbdbyempress.dao.IExamDao;
 
@@ -9,6 +13,8 @@ import cn.software_engineering.jkbdbyempress.dao.IExamDao;
 
 public class ExamBiz implements IExamBiz{
     IExamDao dao;
+    int quetionIndex=0;
+    List<Quetion> examlist=null;
 
     public ExamBiz() {
         this.dao = new ExamDao();
@@ -16,24 +22,48 @@ public class ExamBiz implements IExamBiz{
 
     @Override
     public void biginExam() {
-       // loadExamInfo();
+        quetionIndex=0;
         dao.loadExamInfo();
         dao.loadQuetionLists();
-
     }
 
     @Override
-    public void nextQuetion() {
-
+    public Quetion getNowQuetion() {
+        examlist=ExamApplication.getInstance().getMquetions();
+        if(examlist!=null){
+            return examlist.get(quetionIndex);
+        }else{
+            return null;
+        }
     }
 
     @Override
-    public void preQuetion() {
+    public Quetion nextQuetion() {
+        if(examlist!=null && quetionIndex<examlist.size()-1){
+            quetionIndex++;
+            return examlist.get(quetionIndex);
+        }else{
+            return null;
+        }
+    }
 
+    @Override
+    public Quetion preQuetion() {
+        if(examlist!=null && quetionIndex>0){
+            quetionIndex++;
+            return examlist.get(quetionIndex);
+        }else{
+            return null;
+        }
     }
 
     @Override
     public void commitExam() {
 
+    }
+
+    @Override
+    public String getQuetionIndex() {
+        return (quetionIndex+1)+".";
     }
 }

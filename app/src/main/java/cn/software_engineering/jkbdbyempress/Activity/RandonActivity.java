@@ -32,7 +32,7 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
  */
 
 public class RandonActivity extends AppCompatActivity {
-    TextView exminfo,title,intem1,intem2,intem3,intem4,tvload;
+    TextView exminfo,title,intem1,intem2,intem3,intem4,tvload,tvno;
     ImageView quetion_img;
     LinearLayout layoutLoading;
     ProgressBar loaddialog;
@@ -58,6 +58,7 @@ public class RandonActivity extends AppCompatActivity {
         intem3=(TextView)findViewById(R.id.tv_intem3);
         intem4=(TextView)findViewById(R.id.tv_intem4);
         tvload= (TextView) findViewById(R.id.tv_load);
+        tvno= (TextView) findViewById(R.id.tv_exam_no);
         loaddialog= (ProgressBar) findViewById(R.id.load_dialog);
         quetion_img= (ImageView) findViewById(R.id.image_1);
         layoutLoading= (LinearLayout) findViewById(R.id.layout_loading);
@@ -111,10 +112,8 @@ public class RandonActivity extends AppCompatActivity {
                 if(mexamine!=null){
                     showData(mexamine);
                 }
-                List<Quetion> quetion=ExamApplication.getInstance().getMquetions();
-                if(quetion!=null){
-                    showQuetion(quetion);
-                }
+
+                showQuetion(biz.getNowQuetion());
             }
         }else {
             layoutLoading.setEnabled(true);
@@ -124,22 +123,37 @@ public class RandonActivity extends AppCompatActivity {
 
     }
 
-    private void showQuetion(List<Quetion> quetion) {
-        Quetion mquetion=quetion.get(0);
+    private void showQuetion(Quetion mquetion) {
+        Log.e("showQuetion","showQuetion,mquetion"+mquetion);
         if(mquetion!=null)
         {
+            tvno.setText(biz.getQuetionIndex());
             title.setText(mquetion.getQuestion());
             intem1.setText(mquetion.getItem1());
             intem2.setText(mquetion.getItem2());
             intem3.setText(mquetion.getItem3());
             intem4.setText(mquetion.getItem4());
-            Picasso.with(RandonActivity.this).load(mquetion.getUrl()).into(quetion_img);
+            if(mquetion.getUrl()!=null && !mquetion.getUrl().equals("")){
+                quetion_img.setVisibility(View.VISIBLE);
+                Picasso.with(RandonActivity.this).load(mquetion.getUrl()).into(quetion_img);
+            }else {
+                quetion_img.setVisibility(View.GONE);
+            }
         }
     }
 
     private void showData(Examine mexamine) {
         exminfo.setText(mexamine.toString());
     }
+
+    public void preQuetion(View view) {
+        showQuetion(biz.preQuetion());
+    }
+
+    public void nextQuetion(View view) {
+        showQuetion(biz.nextQuetion());
+    }
+
     class LoadExamBroadcast extends BroadcastReceiver {
 
         @Override
