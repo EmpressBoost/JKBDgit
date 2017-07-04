@@ -190,6 +190,11 @@ public class RandonActivity extends AppCompatActivity {
                 quetion_img.setVisibility(View.GONE);
             }
             resetOption();
+            String userAnswer=mquetion.getUserAnswer();
+            if(userAnswer!=null && !userAnswer.equals("")){
+                int userCB=Integer.parseInt(userAnswer)-1;
+                cbs[userCB].setChecked(true);
+            }
         }
     }
 
@@ -201,10 +206,7 @@ public class RandonActivity extends AppCompatActivity {
     private void saveUserAnswer(){
         for (int i = 0; i < cbs.length; i++) {
             if(cbs[i].isChecked()){
-               // Log.e("chakan","1cbs:"+biz.getNowQuetion());
-               // Log.e("chakan","cbs:"+i);
                 biz.getNowQuetion().setUserAnswer(String.valueOf(i+1));
-              //  Log.e("chakan","2cbs:"+biz.getNowQuetion());
                 return;
             }
         }
