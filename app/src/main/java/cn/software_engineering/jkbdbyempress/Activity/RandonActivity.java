@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.software_engineering.jkbdbyempress.ExamApplication;
 import cn.software_engineering.jkbdbyempress.R;
@@ -36,7 +38,7 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
  */
 
 public class RandonActivity extends AppCompatActivity {
-    TextView exminfo,title,intem1,intem2,intem3,intem4,tvload,tvno;
+    TextView exminfo,title,intem1,intem2,intem3,intem4,tvload,tvno,tvtime;
     ImageView quetion_img;
     LinearLayout layoutLoading,layout03,layout04;
     ProgressBar loaddialog;
@@ -64,6 +66,7 @@ public class RandonActivity extends AppCompatActivity {
         intem3=(TextView)findViewById(R.id.tv_intem3);
         intem4=(TextView)findViewById(R.id.tv_intem4);
         tvload= (TextView) findViewById(R.id.tv_load);
+        tvtime= (TextView) findViewById(R.id.tv_time);
         tvno= (TextView) findViewById(R.id.tv_exam_no);
         loaddialog= (ProgressBar) findViewById(R.id.load_dialog);
         quetion_img= (ImageView) findViewById(R.id.image_1);
@@ -162,12 +165,45 @@ public class RandonActivity extends AppCompatActivity {
                     showData(mexamine);
                 }
                 showQuetion(biz.getNowQuetion());
+                initTime(mexamine);
             }else {
                 layoutLoading.setEnabled(true);
                 loaddialog.setVisibility(View.GONE);
                 tvload.setText("下载失败，点击重新下载");
             }
         }
+    }
+
+    private void initTime(Examine mexamine) {
+        long sumTime=mexamine.getLimitTime()*60*1000;
+        final long overTime=sumTime+System.currentTimeMillis();
+        final Timer timer=new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long l=overTime-System.currentTimeMillis();
+                final long min=l/1000/60;
+                final long sec=l/1000%60;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvtime.setText("剩余时间："+min+"分"+sec+"秒");
+                    }
+                });
+            }
+        },0,1000);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timer.cancel();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        commit(null);
+                    }
+                });
+            }
+        },sumTime);
     }
 
     private void showQuetion(Quetion mquetion) {

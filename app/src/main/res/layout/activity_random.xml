@@ -35,7 +35,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.8"
+        android:layout_weight="0.7"
         android:orientation="vertical">
         <ImageView
             android:layout_width="wrap_content"
@@ -52,6 +52,15 @@
             android:textColor="#000"
             android:textSize="18dp"
             tools:text="@string/examineinfo"/>
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="18dp"
+            android:text="剩余时间：9分50秒"
+            android:layout_marginLeft="15dp"
+            />
 
 
 
