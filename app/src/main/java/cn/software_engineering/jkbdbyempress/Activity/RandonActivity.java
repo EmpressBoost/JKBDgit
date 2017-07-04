@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -34,8 +35,10 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
 public class RandonActivity extends AppCompatActivity {
     TextView exminfo,title,intem1,intem2,intem3,intem4,tvload,tvno;
     ImageView quetion_img;
-    LinearLayout layoutLoading;
+    LinearLayout layoutLoading,layout03,layout04;
     ProgressBar loaddialog;
+    CheckBox cb_01,cb_02,cb_03,cb_04;
+    CheckBox[] cbs;
     boolean isLoadExamInfoReceiver=false;
     boolean isLoadExamQuetionReceiver=false;
     boolean isLoadExamInfo=false;
@@ -62,6 +65,17 @@ public class RandonActivity extends AppCompatActivity {
         loaddialog= (ProgressBar) findViewById(R.id.load_dialog);
         quetion_img= (ImageView) findViewById(R.id.image_1);
         layoutLoading= (LinearLayout) findViewById(R.id.layout_loading);
+        layout03= (LinearLayout) findViewById(R.id.layout_03);
+        layout04= (LinearLayout) findViewById(R.id.layout_04);
+        cb_01= (CheckBox) findViewById(R.id.cb_01);
+        cb_02= (CheckBox) findViewById(R.id.cb_02);
+        cb_03= (CheckBox) findViewById(R.id.cb_03);
+        cb_04= (CheckBox) findViewById(R.id.cb_04);
+        cbs=new CheckBox[4];
+        cbs[0]=cb_01;
+        cbs[1]=cb_02;
+        cbs[2]=cb_03;
+        cbs[3]=cb_04;
         layoutLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +147,10 @@ public class RandonActivity extends AppCompatActivity {
             intem2.setText(mquetion.getItem2());
             intem3.setText(mquetion.getItem3());
             intem4.setText(mquetion.getItem4());
+            layout03.setVisibility(mquetion.getItem3().equals("")?View.GONE:View.VISIBLE);
+            cb_03.setVisibility(mquetion.getItem3().equals("")?View.GONE:View.VISIBLE);
+            layout04.setVisibility(mquetion.getItem4().equals("")?View.GONE:View.VISIBLE);
+            cb_04.setVisibility(mquetion.getItem4().equals("")?View.GONE:View.VISIBLE);
             if(mquetion.getUrl()!=null && !mquetion.getUrl().equals("")){
                 quetion_img.setVisibility(View.VISIBLE);
                 Picasso.with(RandonActivity.this).load(mquetion.getUrl()).into(quetion_img);
