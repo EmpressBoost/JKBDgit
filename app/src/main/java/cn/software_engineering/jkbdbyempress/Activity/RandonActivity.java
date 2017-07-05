@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Gallery;
@@ -183,6 +184,12 @@ public class RandonActivity extends AppCompatActivity {
     private void innitGallery() {
         adapter=new QuetionAdapter(this);
         gallery.setAdapter(adapter);
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                showQuetion(biz.getNowQuetion(i));
+            }
+        });
     }
 
     private void initTime(Examine mexamine) {

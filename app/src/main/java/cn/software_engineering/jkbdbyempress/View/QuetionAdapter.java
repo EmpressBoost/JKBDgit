@@ -46,7 +46,7 @@ public class QuetionAdapter extends BaseAdapter{
         View inflate= View.inflate(context,R.layout.item_quetion,null);
         ImageView ivQuetion= (ImageView) inflate.findViewById(R.id.iv_quetion);
         TextView tvno= (TextView) inflate.findViewById(R.id.tv_no );
-        tvno.setText("第"+i+"题");
+        tvno.setText("第"+(i+1)+"题");
         return inflate;
     }
 }

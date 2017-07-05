@@ -9,6 +9,7 @@ import cn.software_engineering.jkbdbyempress.bean.Quetion;
 public interface IExamBiz {
     void biginExam();
     Quetion getNowQuetion();
+    Quetion getNowQuetion(int index);
     Quetion nextQuetion();
     Quetion preQuetion();
     int commitExam();

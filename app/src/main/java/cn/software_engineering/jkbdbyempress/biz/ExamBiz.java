@@ -38,6 +38,17 @@ public class ExamBiz implements IExamBiz{
     }
 
     @Override
+    public Quetion getNowQuetion(int index) {
+        examlist=ExamApplication.getInstance().getMquetions();
+        quetionIndex=index;
+        if(examlist!=null){
+            return examlist.get(quetionIndex);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
     public Quetion nextQuetion() {
         if(examlist!=null && quetionIndex<examlist.size()-1){
             quetionIndex++;
