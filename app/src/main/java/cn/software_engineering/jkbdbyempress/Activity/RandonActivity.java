@@ -43,6 +43,8 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
 
 public class RandonActivity extends AppCompatActivity {
     CheckBox[] cbs;
+    TextView[] options;
+    TextView[] optionText;
     boolean isLoadExamInfoReceiver = false;
     boolean isLoadExamQuetionReceiver = false;
     boolean isLoadExamInfo = false;
@@ -82,45 +84,25 @@ public class RandonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random);
         ButterKnife.bind(this);
-
-
-        //Intent intent = this.getIntent();
-//        exminfo = (TextView) findViewById(R.id.examineindo);
-//        title = (TextView) findViewById(R.id.tv_exmtitle);
-//        intem1 = (TextView) findViewById(R.id.tv_intem1);
-//        intem2 = (TextView) findViewById(R.id.tv_intem2);
-//        intem3 = (TextView) findViewById(R.id.tv_intem3);
-//        intem4 = (TextView) findViewById(R.id.tv_intem4);
-//        tvload = (TextView) findViewById(R.id.tv_load);
-//        tvtime = (TextView) findViewById(R.id.tv_time);
-//        tvanalyisis = (TextView) findViewById(R.id.tv_analysis);
-//        tvno = (TextView) findViewById(R.id.tv_exam_no);
-//        loaddialog = (ProgressBar) findViewById(R.id.load_dialog);
-//        gallery = (Gallery) findViewById(R.id.gallery01);
-//        quetion_img = (ImageView) findViewById(R.id.image_1);
-//        layoutLoading = (LinearLayout) findViewById(R.id.layout_loading);
-//        layout03 = (LinearLayout) findViewById(R.id.layout_03);
-//        layout04 = (LinearLayout) findViewById(R.id.layout_04);
-//        cb_01 = (CheckBox) findViewById(R.id.cb_01);
-//        cb_02 = (CheckBox) findViewById(R.id.cb_02);
-//        cb_03 = (CheckBox) findViewById(R.id.cb_03);
-//        cb_04 = (CheckBox) findViewById(R.id.cb_04);
         cbs = new CheckBox[4];
         cbs[0] = cb_01;
         cbs[1] = cb_02;
         cbs[2] = cb_03;
         cbs[3] = cb_04;
+        options=new TextView[4];
+        options[0]=intem1;
+        options[1]=intem2;
+        options[2]=intem3;
+        options[3]=intem4;
+        optionText=new TextView[4];
+        optionText[0]=op01;
+        optionText[1]=op02;
+        optionText[2]=op03;
+        optionText[3]=op04;
         cb_01.setOnCheckedChangeListener(listener);
         cb_02.setOnCheckedChangeListener(listener);
         cb_03.setOnCheckedChangeListener(listener);
         cb_04.setOnCheckedChangeListener(listener);
-//        layoutLoading.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                loadData();
-//
-//            }
-//        });
         loadExamBroadcast = new LoadExamBroadcast();
         loadQuetionBroadcast = new LoadQuetionBroadcast();
         setListener();
@@ -278,7 +260,7 @@ public class RandonActivity extends AppCompatActivity {
             }
             resetOption();
             String userAnswer = mquetion.getUserAnswer();
-            if (userAnswer != null && !userAnswer.equals("")) {
+            if (userAnswer != null && !userAnswer.equals("")) {//用户已经答题
                 int userCB = Integer.parseInt(userAnswer) - 1;
                 cbs[userCB].setChecked(true);
                 String answer = null;
@@ -298,7 +280,32 @@ public class RandonActivity extends AppCompatActivity {
                 }
                 String analysis = mquetion.getExplains();
                 tvanalyisis.setText("正确答案为：" + answer + "\n解析：" + analysis);
+                tvanalyisis.setVisibility(View.VISIBLE);
                 notSelect();
+                if(!userAnswer.equals(mquetion.getAnswer())){
+                    tvanalyisis.setTextColor(getResources().getColor(R.color.red));
+                }
+                else{
+                    tvanalyisis.setTextColor(getResources().getColor(R.color.black));
+                }
+                int ua=Integer.parseInt(userAnswer)-1;
+                int a=Integer.parseInt(mquetion.getAnswer())-1;
+                for (int i = 0; i < options.length; i++) {
+                    if(i==a){//正确答案
+                        options[i].setTextColor(getResources().getColor(R.color.green));
+                        optionText[i].setTextColor(getResources().getColor(R.color.green));
+                    }
+                    else{//错误答案
+                        if(ua!=a && i==ua){//用户选错的答案
+                            options[i].setTextColor(getResources().getColor(R.color.red));
+                            optionText[i].setTextColor(getResources().getColor(R.color.red));
+                        }
+                        else {//错误答案中又非用户选中的
+                            options[i].setTextColor(getResources().getColor(R.color.black));
+                            optionText[i].setTextColor(getResources().getColor(R.color.black));
+                        }
+                    }
+                }
             }
         }
     }
@@ -309,6 +316,14 @@ public class RandonActivity extends AppCompatActivity {
             cb.setOnCheckedChangeListener(listener);
             cb.setEnabled(true);
         }
+        for (TextView option : options) {
+            option.setTextColor(getResources().getColor(R.color.black));
+        }
+        for (TextView optiontext : optionText) {
+            optiontext.setTextColor(getResources().getColor(R.color.black));
+        }
+        tvanalyisis.setTextColor(getResources().getColor(R.color.black));
+        tvanalyisis.setVisibility(View.GONE);
     }
 
     private void saveUserAnswer() {
