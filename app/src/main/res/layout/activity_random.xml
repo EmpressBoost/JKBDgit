@@ -10,6 +10,7 @@
         android:id="@+id/layout_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:gravity="center">
@@ -22,6 +23,8 @@
             android:id="@+id/tv_load"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp
+"
             android:text="下载中……"
             android:textSize="18dp"
             android:textColor="#000"
@@ -35,7 +38,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
         android:orientation="vertical">
 
         <ImageView
@@ -78,8 +80,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="8">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -275,6 +276,14 @@
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
                 android:gravity="center">
+                <TextView
+                    android:id="@+id/tv_analysis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    tools:text="正确答案为：A\n解析：ba'la'ba'la"
+                    android:textSize="16dp"
+                    android:textColor="#000"/>
 
                 <Gallery
                     android:id="@+id/gallery01"

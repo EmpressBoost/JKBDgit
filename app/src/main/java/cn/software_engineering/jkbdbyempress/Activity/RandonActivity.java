@@ -42,7 +42,7 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
  */
 
 public class RandonActivity extends AppCompatActivity {
-    TextView exminfo,title,intem1,intem2,intem3,intem4,tvload,tvno,tvtime;
+    TextView exminfo,title,intem1,intem2,intem3,intem4,tvload,tvno,tvtime,tvanalyisis;
     ImageView quetion_img;
     Gallery gallery;
     LinearLayout layoutLoading,layout03,layout04;
@@ -73,6 +73,7 @@ public class RandonActivity extends AppCompatActivity {
         intem4=(TextView)findViewById(R.id.tv_intem4);
         tvload= (TextView) findViewById(R.id.tv_load);
         tvtime= (TextView) findViewById(R.id.tv_time);
+        tvanalyisis= (TextView) findViewById(R.id.tv_analysis);
         tvno= (TextView) findViewById(R.id.tv_exam_no);
         loaddialog= (ProgressBar) findViewById(R.id.load_dialog);
         gallery= (Gallery) findViewById(R.id.gallery01);
@@ -257,6 +258,23 @@ public class RandonActivity extends AppCompatActivity {
             if(userAnswer!=null && !userAnswer.equals("")) {
                 int userCB = Integer.parseInt(userAnswer) - 1;
                 cbs[userCB].setChecked(true);
+                String answer=null;
+                switch (mquetion.getAnswer()){
+                    case "1":
+                        answer="A";
+                        break;
+                    case "2":
+                        answer="B";
+                        break;
+                    case "3":
+                        answer="C";
+                        break;
+                    case "4":
+                        answer="D";
+                        break;
+                }
+                String analysis=mquetion.getExplains();
+                tvanalyisis.setText("正确答案为："+answer+"\n解析："+analysis);
                 notSelect();
             }
         }
