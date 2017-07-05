@@ -261,6 +261,12 @@
         android:layout_height="match_parent"
         android:layout_weight="0.8"
         android:gravity="center">
+        <Gallery
+            android:id="@+id/gallery01"
+            android:spacing="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Gallery>
 
         <RelativeLayout
             android:layout_width="match_parent"

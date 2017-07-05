@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -28,6 +29,7 @@ import java.util.TimerTask;
 
 import cn.software_engineering.jkbdbyempress.ExamApplication;
 import cn.software_engineering.jkbdbyempress.R;
+import cn.software_engineering.jkbdbyempress.View.QuetionAdapter;
 import cn.software_engineering.jkbdbyempress.bean.Examine;
 import cn.software_engineering.jkbdbyempress.bean.Quetion;
 import cn.software_engineering.jkbdbyempress.biz.ExamBiz;
@@ -40,6 +42,7 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
 public class RandonActivity extends AppCompatActivity {
     TextView exminfo,title,intem1,intem2,intem3,intem4,tvload,tvno,tvtime;
     ImageView quetion_img;
+    Gallery gallery;
     LinearLayout layoutLoading,layout03,layout04;
     ProgressBar loaddialog;
     CheckBox cb_01,cb_02,cb_03,cb_04;
@@ -48,6 +51,7 @@ public class RandonActivity extends AppCompatActivity {
     boolean isLoadExamQuetionReceiver=false;
     boolean isLoadExamInfo=false;
     boolean isLoadExamQuetion=false;
+    QuetionAdapter adapter;
     IExamBiz biz;
     LoadExamBroadcast loadExamBroadcast;
     LoadQuetionBroadcast loadQuetionBroadcast;
@@ -69,6 +73,7 @@ public class RandonActivity extends AppCompatActivity {
         tvtime= (TextView) findViewById(R.id.tv_time);
         tvno= (TextView) findViewById(R.id.tv_exam_no);
         loaddialog= (ProgressBar) findViewById(R.id.load_dialog);
+        gallery= (Gallery) findViewById(R.id.gallery01);
         quetion_img= (ImageView) findViewById(R.id.image_1);
         layoutLoading= (LinearLayout) findViewById(R.id.layout_loading);
         layout03= (LinearLayout) findViewById(R.id.layout_03);
@@ -147,7 +152,7 @@ public class RandonActivity extends AppCompatActivity {
     private void loadData() {
         layoutLoading.setEnabled(false);
         loaddialog.setVisibility(View.VISIBLE);
-        tvload.setText("下z载中……");
+        tvload.setText("下载中……");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -164,6 +169,7 @@ public class RandonActivity extends AppCompatActivity {
                 if(mexamine!=null){
                     showData(mexamine);
                 }
+                innitGallery();
                 showQuetion(biz.getNowQuetion());
                 initTime(mexamine);
             }else {
@@ -172,6 +178,11 @@ public class RandonActivity extends AppCompatActivity {
                 tvload.setText("下载失败，点击重新下载");
             }
         }
+    }
+
+    private void innitGallery() {
+        adapter=new QuetionAdapter(this);
+        gallery.setAdapter(adapter);
     }
 
     private void initTime(Examine mexamine) {
