@@ -1,5 +1,6 @@
 package cn.software_engineering.jkbdbyempress.Activity;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,6 +43,8 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
  */
 
 public class RandonActivity extends AppCompatActivity {
+    int count,correct_num,error_num;
+    boolean firstAsk;
     CheckBox[] cbs;
     TextView[] options;
     TextView[] optionText;
@@ -84,6 +87,8 @@ public class RandonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random);
         ButterKnife.bind(this);
+        firstAsk=true;
+        count=correct_num=error_num=0;
         cbs = new CheckBox[4];
         cbs[0] = cb_01;
         cbs[1] = cb_02;
@@ -330,6 +335,32 @@ public class RandonActivity extends AppCompatActivity {
         for (int i = 0; i < cbs.length; i++) {
             if (cbs[i].isChecked()) {
                 biz.getNowQuetion().setUserAnswer(String.valueOf(i + 1));
+                int a=Integer.parseInt(biz.getNowQuetion().getAnswer())-1;
+                if(a==i){//答题正确
+                    correct_num++;
+                    count++;
+                }else {//答题错误
+                    error_num++;
+                    count++;
+                }
+                if(error_num==11  && firstAsk){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setIcon(R.mipmap.exam_commit32x32)
+                            .setTitle("是否答题")
+                            .setMessage("你的分数已经不及格，还要继续答题吗？")
+                            .setPositiveButton("继续", null)
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    commit(null);
+                                }
+                            });
+                    firstAsk=false;
+                    builder.create().show();
+                }
+                if(count==100){
+                    commit(null);
+                }
                 adapter.notifyDataSetChanged();
                 return;
             }
@@ -399,5 +430,4 @@ public class RandonActivity extends AppCompatActivity {
             initData();
         }
     }
-
 }
