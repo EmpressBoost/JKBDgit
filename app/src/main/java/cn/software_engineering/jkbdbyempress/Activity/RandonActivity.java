@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -134,6 +135,12 @@ public class RandonActivity extends AppCompatActivity {
             }
         }
     };
+    private  void notSelect(){
+        for (CheckBox cb : cbs) {
+            cb.setOnCheckedChangeListener(null);
+            cb.setEnabled(false);
+        }
+    }
     private void setListener() {
         registerReceiver(loadExamBroadcast,new IntentFilter(ExamApplication.LOAD_EXAM_INFO));
         registerReceiver(loadQuetionBroadcast,new IntentFilter(ExamApplication.LOAD_EXAM_QUESTION));
@@ -187,6 +194,7 @@ public class RandonActivity extends AppCompatActivity {
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                saveUserAnswer();
                 showQuetion(biz.getNowQuetion(i));
             }
         });
@@ -246,9 +254,10 @@ public class RandonActivity extends AppCompatActivity {
             }
             resetOption();
             String userAnswer=mquetion.getUserAnswer();
-            if(userAnswer!=null && !userAnswer.equals("")){
-                int userCB=Integer.parseInt(userAnswer)-1;
+            if(userAnswer!=null && !userAnswer.equals("")) {
+                int userCB = Integer.parseInt(userAnswer) - 1;
                 cbs[userCB].setChecked(true);
+                notSelect();
             }
         }
     }
@@ -256,15 +265,20 @@ public class RandonActivity extends AppCompatActivity {
     private void resetOption() {
         for (CheckBox cb : cbs) {
             cb.setChecked(false);
+            cb.setOnCheckedChangeListener(listener);
+            cb.setEnabled(true);
         }
     }
     private void saveUserAnswer(){
         for (int i = 0; i < cbs.length; i++) {
             if(cbs[i].isChecked()){
                 biz.getNowQuetion().setUserAnswer(String.valueOf(i+1));
+                adapter.notifyDataSetChanged();
                 return;
             }
         }
+        biz.getNowQuetion().setUserAnswer("");
+        adapter.notifyDataSetChanged();
     }
     private void showData(Examine mexamine) {
         exminfo.setText(mexamine.toString());

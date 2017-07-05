@@ -45,6 +45,17 @@ public class QuetionAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         View inflate= View.inflate(context,R.layout.item_quetion,null);
         ImageView ivQuetion= (ImageView) inflate.findViewById(R.id.iv_quetion);
+        String userAnswer=examList.get(i).getUserAnswer();
+        String answer=examList.get(i).getAnswer();
+        if(userAnswer==null || userAnswer.equals("")){
+            ivQuetion.setImageResource(R.mipmap.question24x24);
+        }
+        else if(answer.equals(userAnswer)){
+            ivQuetion.setImageResource(R.mipmap.answer24x24);
+        }
+        else {
+            ivQuetion.setImageResource(R.mipmap.error24x24);
+        }
         TextView tvno= (TextView) inflate.findViewById(R.id.tv_no );
         tvno.setText("第"+(i+1)+"题");
         return inflate;
