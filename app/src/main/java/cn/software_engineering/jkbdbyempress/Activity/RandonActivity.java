@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -44,6 +47,8 @@ import cn.software_engineering.jkbdbyempress.biz.IExamBiz;
 
 public class RandonActivity extends AppCompatActivity {
     int count,correct_num,error_num;
+    float x1;
+    float x2;
     boolean firstAsk;
     CheckBox[] cbs;
     TextView[] options;
@@ -81,6 +86,8 @@ public class RandonActivity extends AppCompatActivity {
     @BindView(R.id.tv_analysis)    TextView tvanalyisis;
     @BindView(R.id.gallery01)    Gallery gallery;
     @BindView(R.id.btn_next)    Button btnNext;
+   // @BindView(R.id.tv_layout_show)    Layout tvlayoutshow;
+    @BindView(R.id.scrollview)    ScrollView scrollview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,9 +119,35 @@ public class RandonActivity extends AppCompatActivity {
         loadQuetionBroadcast = new LoadQuetionBroadcast();
         setListener();
         biz = new ExamBiz();
+        layoutLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadData();
+            }
+        });
+        scrollview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int action=motionEvent.getAction();
+                switch (action){
+                    case (MotionEvent.ACTION_DOWN):
+                        x1=motionEvent.getX();
+                        break;
+                    case (MotionEvent.ACTION_UP):
+                        x2=motionEvent.getX();
+                        if(x1 - x2 > 50){
+                            nextQuetion(null);
+                        }
+                        if(x2 - x1 > 50){
+                            preQuetion(null);
+                        }
+                }
+                return true;
+            }
+        });
         loadData();
     }
-    @OnClick(R.id.layout_loading) void onLoadClick(){loadData();}
+//    @OnClick(R.id.layout_loading) void onLoadClick(){loadData();}
 
     CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
         @Override

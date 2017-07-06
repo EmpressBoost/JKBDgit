@@ -79,10 +79,12 @@
         />
 
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/tv_layout_show"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
